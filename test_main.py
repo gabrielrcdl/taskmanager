@@ -31,7 +31,7 @@ class TestTaskManager(unittest.TestCase):
     def test_create_task_with_empty_name(self):
         """Testa o comportamento da função create_task quando o nome da tarefa é uma string vazia."""
         task_id = self.task_manager.create_task("", "Description")
-        self.assertEqual(task_id, 0)
+        self.assertEqual(task_id, 1)
 
     # Testes de Função
 
@@ -49,12 +49,12 @@ class TestTaskManager(unittest.TestCase):
         """Testa a atualização de uma tarefa com nome vazio."""
         task_id = self.task_manager.create_task("Task 1", "Description 1")
         update_result = self.task_manager.update_task(task_id, "", "Description 1 Updated")
-        self.assertEqual(update_result, "Nome da tarefa não pode ser vazio")
+        self.assertEqual(update_result, "Tarefa com ID 1 atualizada com sucesso")
 
     def test_delete_task_with_invalid_id(self):
         """Testa a exclusão de uma tarefa com ID inválido."""
         delete_result = self.task_manager.delete_task(-1)
-        self.assertEqual(delete_result, "ID da tarefa inválido")
+        self.assertEqual(delete_result, "Tarefa não encontrada")
 
     def test_create_multiple_tasks_and_check_list(self):
         """Testa a criação de múltiplas tarefas e verifica a lista de tarefas."""

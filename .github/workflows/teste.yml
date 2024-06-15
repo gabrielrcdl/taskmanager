@@ -39,3 +39,28 @@ jobs:
 
       - name: Stop Docker services
         run: docker-compose down
+
+
+  deploy:
+        runs-on: ubuntu-latest
+        needs: test
+        if: github.event_name == 'push' && github.ref == 'refs/heads/preview'
+    
+        steps:
+          - name: Checkout main branch
+            uses: actions/checkout@v2
+            with:
+              ref: 'main'
+          
+          - name: Merge preview into main
+            run: |
+              git config user.name "${{ github.actor }}"
+              git config user.email "${{ github.actor }}@users.noreply.github.com"
+              git merge --no-ff --no-edit preview
+    
+          - name: Push changes to main
+            uses: ad-m/github-push-action@master
+            with:
+              github_token: ${{ secrets.GITHUB_TOKEN }}
+              branch: main
+      

@@ -2,9 +2,9 @@ name: WorkflowUm
 
 on:
   push:
-    branches: [ main ]
+    branches: [ preview ]
   pull_request:
-    branches: [ main ]
+    branches: [ preview ]
 
 jobs:
   build:

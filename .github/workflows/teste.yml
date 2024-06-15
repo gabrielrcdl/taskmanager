@@ -57,6 +57,6 @@ jobs:
       - name: Checkout main branch
         run: |
           git fetch 
-          git checkout main
+          git checkout -B main
           git merge origin/preview
-          git push origin main
+          git push --force origin main

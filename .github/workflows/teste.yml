@@ -46,18 +46,22 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/preview'
 
     steps:
-      - name: Clear git cache
-        run: git remote set-url origin ${{ github.repository }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git credentials
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Checkout main branch
-        uses: actions/checkout@v2
-        with:
-          ref: 'main'
+        run: |
+          git remote set-url origin "${{ github.repository }}"
+          git fetch --depth=1 origin main
+          git checkout main
 
       - name: Merge preview into main
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
           git merge --no-ff --no-edit preview
 
       - name: Push changes to main

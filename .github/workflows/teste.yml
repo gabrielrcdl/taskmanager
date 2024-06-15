@@ -30,8 +30,7 @@ jobs:
         run: |
           docker-compose up --abort-on-container-exit
 
-      - name: Archive test results
-        if: ${{ failure() }}
+      - name: Arquivo test results
         uses: actions/upload-artifact@v2
         with:
           name: test-results

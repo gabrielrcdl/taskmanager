@@ -56,17 +56,7 @@ jobs:
 
       - name: Checkout main branch
         run: |
-          git remote set-url origin "${{ github.repository }}"
-          git fetch --depth=1 origin main
+          git fetch 
           git checkout main
-
-      - name: Merge preview into main
-        run: |
-          git merge --no-ff --no-edit preview
-
-      - name: Push changes to main
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
-#s
+          git merge origin/preview
+          git push origin main
